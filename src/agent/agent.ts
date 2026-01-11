@@ -27,7 +27,7 @@ export async function runAgent(userId: string, userMessage: string): Promise<str
   ]
 
   const response = await claude.messages.create({
-    model: "claude-3-5-sonnet-20241022",
+    model: "claude-3-haiku-20240307",
     max_tokens: 500,
     system: "You are a helpful financial assistant.",
     messages,
@@ -42,7 +42,7 @@ export async function runAgent(userId: string, userMessage: string): Promise<str
       const result = await getUserBalance(msg.input as { userId: string })
 
       const followUp = await claude.messages.create({
-        model: "claude-3-5-sonnet-20241022",
+        model: "claude-3-haiku-20240307",
         max_tokens: 500,
         system: "You are a helpful financial assistant.",
         messages: [
