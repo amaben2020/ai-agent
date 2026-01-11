@@ -1,6 +1,7 @@
 import express from 'express';
-import { enablePgVector, query } from '../db';
+import { query } from '../db';
 import chatRouter from "./routes/chat"
+import { runMigrations } from './db/migrate';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -32,14 +33,16 @@ app.get('/db-test', async (_, res) => {
   }
 });
 
-app.post("/chat", chatRouter)
-// Initialize pgvector extension
+app.use("/chat", chatRouter)
+
+// Initialize database with migrations
 const initializeDatabase = async () => {
   try {
-    await enablePgVector();
-    console.log('Database initialized successfully');
+    await runMigrations();
+    console.log('✅ Database initialized successfully');
   } catch (error) {
-    console.error('Failed to initialize database:', error);
+    console.error('❌ Failed to initialize database:', error);
+    throw error;
   }
 };
 

@@ -1,7 +1,11 @@
 // src/agent/agent.ts
 import Anthropic from "@anthropic-ai/sdk"
+import dotenv from "dotenv"
 import { tools, getUserBalance } from "./tools"
 import { saveMemory, loadRecentMemory } from "./memory"
+
+// Ensure environment variables are loaded
+dotenv.config()
 
 export const claude = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY!
